@@ -15,7 +15,7 @@ method defend(defender: Entity, attacker: Entity): int  =
 
 method attack(assailant: Entity, target: Entity): void =
   var targetHP = target.HP
-  var damage = assailant.DPS - target.defend(assailant) #need to work difficulty into this after i figure out control flow/branching
+  var damage = rand(1..assailant.DPS) - target.defend(assailant) #need to work difficulty into this after i figure out control flow/branching
   if damage < 0:
     damage = 0
   targetHP = targetHP - damage
