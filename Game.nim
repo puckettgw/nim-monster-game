@@ -3,6 +3,31 @@ include Player
 import Prelude
 include World
 
+method defend(defender: Entity, attacker: Entity): int  =
+  randomize()
+  return rand(defender.level..100)    
+
+method attack(assailant: Player, target: Monster): void =
+  var targetHP = target.HP
+  var damage = 0
+  damage = rand(1..assailant.DPS) - target.defend(assailant) 
+  if damage < 0:
+    damage = 0
+  targetHP = targetHP - damage
+  echo target.name," takes ",$(damage)," damage!"
+  target.HP = targetHP 
+
+method attack(assailant: Monster, target: Player): void =
+  var targetHP = target.HP
+  var damage = 0
+  damage = rand((1+Monster(assailant).difficulty)..assailant.DPS) - target.defend(assailant) 
+  if damage < 0:
+    damage = 0
+  targetHP = targetHP - damage
+  echo target.name," takes ",$(damage)," damage!"
+  target.HP = targetHP 
+
+
 method generateMobs(world: World): void =
   var moblist = MobList()
   for i in 1..(world.difficulty * 100):
